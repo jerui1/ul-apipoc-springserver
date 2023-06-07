@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>ca.ulaval.set.apipoc</groupId>
+        <artifactId>ul-apipoc-springserver</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>ul-apipoc-admission</artifactId>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>ul-apipoc-admission-apirest</module>
+        <module>ul-apipoc-admission-domaine</module>
+        <module>ul-apipoc-admission-persistance</module>
+    </modules>
+
+</project>
