@@ -1,14 +1,15 @@
 package ca.ulaval.set.apipoc.admission.domaine.usecase;
 
-import ca.ulaval.set.apipoc.admission.domaine.entite.EtablissementEnseignementFrequenteEntiteDomaine;
-import ca.ulaval.set.apipoc.admission.domaine.in.EtablissementEnseignementDto;
-import ca.ulaval.set.apipoc.admission.domaine.out.repository.EtablissementEnseignementEntiteRepo;
+import ca.ulaval.set.apipoc.admission.domaine.entite.dossierAdmission.EtablissementEnseignementFrequenteEntiteDomaine;
+import ca.ulaval.set.apipoc.admission.domaine.entite.etablissementEnseignement.EtablissementEnseignementEntiteDomaine;
+import ca.ulaval.set.apipoc.admission.domaine.in.etablissementEnseignement.EtablissementEnseignementEntiteDto;
+import ca.ulaval.set.apipoc.admission.domaine.out.repository.etablissementEnseignement.EtablissementEnseignementEntiteRepo;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface EtablissementEnseignementConvertisseur {
 
-    EtablissementEnseignementFrequenteEntiteDomaine toDomaine(EtablissementEnseignementEntiteRepo repoDto);
+    EtablissementEnseignementEntiteDomaine toDomaine(EtablissementEnseignementEntiteRepo repoDto);
 
-    EtablissementEnseignementDto toDto(EtablissementEnseignementFrequenteEntiteDomaine domaine);
+    EtablissementEnseignementEntiteDto toDto(EtablissementEnseignementFrequenteEntiteDomaine domaine);
 }

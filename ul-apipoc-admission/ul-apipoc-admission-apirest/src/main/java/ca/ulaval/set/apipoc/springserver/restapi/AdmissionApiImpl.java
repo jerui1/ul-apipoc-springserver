@@ -1,6 +1,6 @@
 package ca.ulaval.set.apipoc.springserver.restapi;
 
-import ca.ulaval.set.apipoc.admission.domaine.in.RechercheCmdDto;
+import ca.ulaval.set.apipoc.admission.domaine.in.dossierAdmission.RechercheEtablissementEnseignementFrequenteCmdDto;
 import ca.ulaval.set.apipoc.admission.domaine.usecase.RechercherEtablissementEnseignementFrequenteQuery;
 import ca.ulaval.set.apipoc.restapi.api.AdmissionApiDelegate;
 import ca.ulaval.set.apipoc.restapi.model.EtablissementEnseignementFrequente;
@@ -18,16 +18,16 @@ import java.util.stream.Collectors;
 public class AdmissionApiImpl implements AdmissionApiDelegate {
 
     private final RechercherEtablissementEnseignementFrequenteQuery rechercherEtablissementEnseignementFrequenteQuery;
-    private final EtablissementEnseignementConvertisseurRest etablissementEnseignementConvertisseur;
+    private final EtablissementEnseignementFrequenteConvertisseurRest etablissementEnseignementFrequenteConvertisseur;
 
     @Override
     public ResponseEntity<RechercherEtablissementsEnseignementFrequentes200Response>
             rechercherEtablissementsEnseignementFrequentes(UUID idDossierAdmission, String codePays) {
 
         List<EtablissementEnseignementFrequente> resultats = this.rechercherEtablissementEnseignementFrequenteQuery
-                .apply(new RechercheCmdDto(idDossierAdmission, codePays))
+                .apply(new RechercheEtablissementEnseignementFrequenteCmdDto(idDossierAdmission, codePays))
                 .stream()
-                .map(this.etablissementEnseignementConvertisseur::toRest)
+                .map(this.etablissementEnseignementFrequenteConvertisseur::toRest)
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok(new RechercherEtablissementsEnseignementFrequentes200Response(resultats));

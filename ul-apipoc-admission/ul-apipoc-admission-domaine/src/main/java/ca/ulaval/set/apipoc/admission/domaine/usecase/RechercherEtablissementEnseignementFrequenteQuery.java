@@ -1,21 +1,18 @@
 package ca.ulaval.set.apipoc.admission.domaine.usecase;
 
-import ca.ulaval.set.apipoc.admission.domaine.entite.RechercheCmdDomaine;
-import ca.ulaval.set.apipoc.admission.domaine.in.EtablissementEnseignementDto;
-import ca.ulaval.set.apipoc.admission.domaine.in.RechercheCmdDto;
-import ca.ulaval.set.apipoc.admission.domaine.out.repository.EtablissementEnseignementRepository;
-import ca.ulaval.set.apipoc.admission.domaine.out.repository.RechercheCmdRepoDto;
+import ca.ulaval.set.apipoc.admission.domaine.entite.dossierAdmission.DossierAdmissionEntiteDomaine;
+import ca.ulaval.set.apipoc.admission.domaine.in.dossierAdmission.EtablissementEnseignementFrequenteEntiteDto;
+import ca.ulaval.set.apipoc.admission.domaine.in.dossierAdmission.RechercheEtablissementEnseignementFrequenteCmdDto;
+import ca.ulaval.set.apipoc.admission.domaine.in.etablissementEnseignement.EtablissementEnseignementEntiteDto;
+import ca.ulaval.set.apipoc.admission.domaine.out.repository.dossierAdmission.DossierAdmissionRepository;
+import ca.ulaval.set.apipoc.admission.domaine.out.repository.dossierAdmission.EtablissementEnseignementFrequenteEntiteRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
-import javax.validation.Validator;
 import javax.validation.constraints.NotNull;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -23,28 +20,29 @@ import java.util.stream.Collectors;
 @Validated
 public class RechercherEtablissementEnseignementFrequenteQuery {
 
-    private final RechercheCmdConvertisseur convertisseurCmd;
-    private final EtablissementEnseignementConvertisseur etablissementEnseignementConvertisseur;
-    private final EtablissementEnseignementRepository repository;
-    private final Validator validator;
+    private final DossierAdmissionRepository dossierAdmissionRepository;
+    private final DossierAdmissionConvertisseur dossierAdmissionConvertisseur;
+    private final EtablissementEnseignementFrequenteConvertisseur etablissementEnseignementFrequenteConvertisseur;
 
     @NotNull
     @Valid
-    public List<EtablissementEnseignementDto> apply(@NotNull @Valid RechercheCmdDto rechercheCmdDto) {
-        RechercheCmdDomaine rechercheCmdDomaine = this.convertisseurCmd.toDomaine(rechercheCmdDto);
+    public List<EtablissementEnseignementFrequenteEntiteDto> apply(
+            @NotNull @Valid
+                    RechercheEtablissementEnseignementFrequenteCmdDto
+                            rechercheEtablissementEnseignementFrequenteCmdDto) {
 
-        Set<ConstraintViolation<RechercheCmdDomaine>> constraintViolations = validator.validate(rechercheCmdDomaine);
-        if (!constraintViolations.isEmpty()) {
-            throw new ConstraintViolationException(constraintViolations);
-        }
+        DossierAdmissionEntiteDomaine dossierAdmissionEntiteDomaine =
+                this.dossierAdmissionConvertisseur.toDomaine(this.dossierAdmissionRepository.get(
+                        rechercheEtablissementEnseignementFrequenteCmdDto.idDossierAdmission()));
 
-        RechercheCmdRepoDto rechercheCmdRepoDto = this.convertisseurCmd.toPersistance(rechercheCmdDomaine);
+        List<EtablissementEnseignementFrequenteEntiteDto> etablissementEnseignementEntiteDtos =
+                dossierAdmissionEntiteDomaine
+                        .findEtablissementEnseignementFrequentes(
+                                rechercheEtablissementEnseignementFrequenteCmdDto.codePays())
+                        .stream()
+                        .map(eef -> this.etablissementEnseignementFrequenteConvertisseur.toDto(eef, dossierAdmissionEntiteDomaine))
+                        .collect(Collectors.toList());
 
-        List<EtablissementEnseignementDto> etablissements = this.repository.rechercher(rechercheCmdRepoDto).stream()
-                .map(this.etablissementEnseignementConvertisseur::toDomaine)
-                .map(this.etablissementEnseignementConvertisseur::toDto)
-                .collect(Collectors.toList());
-
-        return etablissements;
+        return etablissementEnseignementEntiteDtos;
     }
 }

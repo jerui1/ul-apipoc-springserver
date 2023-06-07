@@ -11,11 +11,6 @@
 
     <artifactId>ul-apipoc-admission-persistance</artifactId>
 
-    <properties>
-        <maven.compiler.source>20</maven.compiler.source>
-        <maven.compiler.target>20</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
     <dependencies>
         <dependency>
             <groupId>ca.ulaval.set.apipoc</groupId>
