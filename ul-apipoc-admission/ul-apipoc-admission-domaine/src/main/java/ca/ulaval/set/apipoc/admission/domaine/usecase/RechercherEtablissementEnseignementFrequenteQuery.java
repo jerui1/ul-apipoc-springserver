@@ -1,6 +1,6 @@
 package ca.ulaval.set.apipoc.admission.domaine.usecase;
 
-import ca.ulaval.set.apipoc.admission.domaine.convertisseur.EtablissementEnseignementFrequenteConvertisseur;
+import ca.ulaval.set.apipoc.admission.domaine.adapter.convertisseur.EtablissementEnseignementFrequenteConvertisseur;
 import ca.ulaval.set.apipoc.admission.domaine.entite.dossierAdmission.DossierAdmissionRepositoryDomaine;
 import ca.ulaval.set.apipoc.admission.domaine.in.dossierAdmission.EtablissementEnseignementFrequenteEntiteDto;
 import ca.ulaval.set.apipoc.admission.domaine.in.dossierAdmission.RechercheEtablissementEnseignementFrequenteCmdDto;

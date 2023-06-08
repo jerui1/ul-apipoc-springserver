@@ -1,9 +1,8 @@
 package ca.ulaval.set.apipoc.admission.domaine.usecase;
 
-import ca.ulaval.set.apipoc.admission.domaine.convertisseur.EtablissementEnseignementConvertisseur;
+import ca.ulaval.set.apipoc.admission.domaine.adapter.convertisseur.EtablissementEnseignementConvertisseur;
 import ca.ulaval.set.apipoc.admission.domaine.entite.etablissementEnseignement.EtablissementEnseignementRepositoryDomaine;
 import ca.ulaval.set.apipoc.admission.domaine.in.etablissementEnseignement.EtablissementEnseignementEntiteDto;
-import ca.ulaval.set.apipoc.admission.domaine.out.repository.etablissementEnseignement.EtablissementEnseignementRepositoryPort;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

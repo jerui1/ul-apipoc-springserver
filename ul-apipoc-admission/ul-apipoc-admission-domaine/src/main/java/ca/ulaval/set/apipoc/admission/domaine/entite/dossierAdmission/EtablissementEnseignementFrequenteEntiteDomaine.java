@@ -1,11 +1,11 @@
 package ca.ulaval.set.apipoc.admission.domaine.entite.dossierAdmission;
 
 import ca.ulaval.set.apipoc.admission.domaine.entite.etablissementEnseignement.EtablissementEnseignementEntiteDomaine;
-import ca.ulaval.set.apipoc.admission.domaine.out.repository.etablissementEnseignement.EtablissementEnseignementEntiteRepo;
 import lombok.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.util.Optional;
 import java.util.UUID;
 
 @Data
@@ -15,9 +15,9 @@ import java.util.UUID;
 public class EtablissementEnseignementFrequenteEntiteDomaine {
 
     @Getter(AccessLevel.NONE)
-    private DossierAdmissionOutillage outillage;
+    private final Outillage outillage;
 
-    private UUID idEtablissementEnseignementFrequente;
+    private final UUID idEtablissementEnseignementFrequente;
 
     @NotNull
     @Valid
@@ -27,15 +27,17 @@ public class EtablissementEnseignementFrequenteEntiteDomaine {
     private Integer version;
 
     static EtablissementEnseignementFrequenteEntiteDomaine creer(
-            DossierAdmissionOutillage outillage, UUID idEtablissementEnseignement) {
+            Outillage outillage, UUID idEtablissementEnseignement) {
 
         EtablissementEnseignementEntiteDomaine etablissementEnseignementEntiteDomaine = outillage
-                .getEtablissementEnseignementRepository()
-                .get(idEtablissementEnseignement)
-                .map(ee -> outillage.getEtablissementEnseignementConvertisseur().toDomaine(ee))
+                .getEtablissementEnseignement(idEtablissementEnseignement)
                 .orElseThrow();
 
         return new EtablissementEnseignementFrequenteEntiteDomaine(
                 outillage, UUID.randomUUID(), etablissementEnseignementEntiteDomaine, 1);
+    }
+
+    public interface Outillage {
+        Optional<EtablissementEnseignementEntiteDomaine> getEtablissementEnseignement(UUID idEtablissementEnseignement);
     }
 }

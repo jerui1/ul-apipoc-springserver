@@ -1,7 +1,7 @@
 package ca.ulaval.set.apipoc.admission.domaine.usecase;
 
 import ca.ulaval.set.apipoc.admission.domaine.entite.dossierAdmission.DossierAdmissionEntiteDomaine;
-import ca.ulaval.set.apipoc.admission.domaine.entite.dossierAdmission.DossierAdmissionFabrique;
+import ca.ulaval.set.apipoc.admission.domaine.entite.dossierAdmission.DossierAdmissionFabriqueDomaine;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +13,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class CreerDossierAdmissionUC {
 
-    private final DossierAdmissionFabrique dossierAdmissionFabrique;
+    private final DossierAdmissionFabriqueDomaine dossierAdmissionFabrique;
 
     public UUID apply(String ni) {
         DossierAdmissionEntiteDomaine nouveauDossierAdmission = this.dossierAdmissionFabrique.creer(ni);

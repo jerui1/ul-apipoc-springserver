@@ -1,6 +1,6 @@
 package ca.ulaval.set.apipoc.admission.domaine.usecase;
 
-import ca.ulaval.set.apipoc.admission.domaine.convertisseur.DossierAdmissionConvertisseur;
+import ca.ulaval.set.apipoc.admission.domaine.adapter.convertisseur.DossierAdmissionConvertisseur;
 import ca.ulaval.set.apipoc.admission.domaine.entite.dossierAdmission.DossierAdmissionRepositoryDomaine;
 import ca.ulaval.set.apipoc.admission.domaine.in.dossierAdmission.DossierAdmissionEntiteDto;
 import lombok.AllArgsConstructor;

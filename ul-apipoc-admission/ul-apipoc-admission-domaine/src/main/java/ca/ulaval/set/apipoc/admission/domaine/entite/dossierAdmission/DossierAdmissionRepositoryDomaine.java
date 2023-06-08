@@ -1,9 +1,10 @@
 package ca.ulaval.set.apipoc.admission.domaine.entite.dossierAdmission;
 
 import ca.ulaval.set.apipoc.admission.domaine.Paire;
-import ca.ulaval.set.apipoc.admission.domaine.convertisseur.DossierAdmissionConvertisseur;
+import ca.ulaval.set.apipoc.admission.domaine.adapter.convertisseur.DossierAdmissionConvertisseur;
 import ca.ulaval.set.apipoc.admission.domaine.out.repository.dossierAdmission.DossierAdmissionEntiteRepo;
 import ca.ulaval.set.apipoc.admission.domaine.out.repository.dossierAdmission.DossierAdmissionRepositoryPort;
+import ca.ulaval.set.apipoc.admission.domaine.adapter.outillage.DossierAdmissionOutillage;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

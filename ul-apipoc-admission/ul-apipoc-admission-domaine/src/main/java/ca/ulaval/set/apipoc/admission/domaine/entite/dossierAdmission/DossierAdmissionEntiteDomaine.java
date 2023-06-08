@@ -1,6 +1,5 @@
 package ca.ulaval.set.apipoc.admission.domaine.entite.dossierAdmission;
 
-import ca.ulaval.set.apipoc.admission.domaine.out.repository.dossierAdmission.DossierAdmissionEntiteRepo;
 import lombok.*;
 import lombok.experimental.Accessors;
 import org.springframework.lang.Nullable;
@@ -20,7 +19,7 @@ import java.util.stream.Collectors;
 public class DossierAdmissionEntiteDomaine {
 
     @Getter(AccessLevel.NONE)
-    private final DossierAdmissionOutillage outillage;
+    private final Outillage outillage;
 
     @NotNull
     private UUID idDossierAdmission;
@@ -41,19 +40,22 @@ public class DossierAdmissionEntiteDomaine {
     }
 
     public EtablissementEnseignementFrequenteEntiteDomaine ajouterEtablissementEnseignementFrequente(
-            UUID idEtablissementEnseignementFrequente
-            ) {
+            UUID idEtablissementEnseignementFrequente) {
 
         EtablissementEnseignementFrequenteEntiteDomaine nouvelEtablissementEnseignementFrequente =
                 EtablissementEnseignementFrequenteEntiteDomaine.creer(
-                        this.outillage, idEtablissementEnseignementFrequente);
+                        this.outillage.getOutillageEtablissementEnseignementFrequente(), idEtablissementEnseignementFrequente);
         this.etablissementEnseignementFrequentes.add(nouvelEtablissementEnseignementFrequente);
         return nouvelEtablissementEnseignementFrequente;
     }
 
     public void persister() {
-        DossierAdmissionEntiteRepo entiteRepo =
-                this.outillage.getDossierAdmissionConvertisseur().toRepo(this);
-        this.outillage.getDossierAdmissionRepository().persist(entiteRepo);
+        this.outillage.persist(this);
+    }
+
+    public interface Outillage {
+        EtablissementEnseignementFrequenteEntiteDomaine.Outillage getOutillageEtablissementEnseignementFrequente();
+
+        void persist(DossierAdmissionEntiteDomaine dossierAdmissionEntiteDomaine);
     }
 }

@@ -1,6 +1,5 @@
 package ca.ulaval.set.apipoc.admission.domaine.entite.etablissementEnseignement;
 
-import ca.ulaval.set.apipoc.admission.domaine.out.repository.etablissementEnseignement.EtablissementEnseignementEntiteRepo;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
@@ -14,9 +13,9 @@ import java.util.UUID;
 public class EtablissementEnseignementEntiteDomaine {
 
     @Getter(AccessLevel.NONE)
-    private final EtablissementEnseignementOutillage outillage;
+    private final Outillage outillage;
 
-    private UUID idEtablissementEnseignement;
+    private final UUID idEtablissementEnseignement;
 
     @NotNull
     @Size(min = 2)
@@ -33,8 +32,11 @@ public class EtablissementEnseignementEntiteDomaine {
     private Boolean estEtablissementUniversitaire;
 
     public void persister() {
-        EtablissementEnseignementEntiteRepo entiteRepo =
-                this.outillage.getEtablissementEnseignementConvertisseur().toRepo(this);
-        this.outillage.getEtablissementEnseignementRepository().persist(entiteRepo);
+        this.outillage.persister(this);
+    }
+
+    public interface Outillage {
+
+        void persister(EtablissementEnseignementEntiteDomaine entiteDomaine);
     }
 }
