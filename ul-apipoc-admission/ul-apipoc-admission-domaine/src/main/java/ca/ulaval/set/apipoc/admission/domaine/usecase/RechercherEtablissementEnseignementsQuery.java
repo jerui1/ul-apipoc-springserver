@@ -1,7 +1,9 @@
 package ca.ulaval.set.apipoc.admission.domaine.usecase;
 
+import ca.ulaval.set.apipoc.admission.domaine.convertisseur.EtablissementEnseignementConvertisseur;
+import ca.ulaval.set.apipoc.admission.domaine.entite.etablissementEnseignement.EtablissementEnseignementRepositoryDomaine;
 import ca.ulaval.set.apipoc.admission.domaine.in.etablissementEnseignement.EtablissementEnseignementEntiteDto;
-import ca.ulaval.set.apipoc.admission.domaine.out.repository.etablissementEnseignement.EtablissementEnseignementRepository;
+import ca.ulaval.set.apipoc.admission.domaine.out.repository.etablissementEnseignement.EtablissementEnseignementRepositoryPort;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,14 +14,12 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class RechercherEtablissementEnseignementsQuery {
 
-    private final EtablissementEnseignementRepository etablissementEnseignementRepository;
+    private final EtablissementEnseignementRepositoryDomaine repositoryDomaine;
     private final EtablissementEnseignementConvertisseur etablissementEnseignementConvertisseur;
 
     public List<EtablissementEnseignementEntiteDto> apply() {
         List<EtablissementEnseignementEntiteDto> etablissementEnseignementEntiteDtos =
-                this.etablissementEnseignementRepository
-                        .find()
-                        .map(this.etablissementEnseignementConvertisseur::toDomaine)
+                this.repositoryDomaine.find()
                         .map(this.etablissementEnseignementConvertisseur::toDto)
                         .collect(Collectors.toList());
 

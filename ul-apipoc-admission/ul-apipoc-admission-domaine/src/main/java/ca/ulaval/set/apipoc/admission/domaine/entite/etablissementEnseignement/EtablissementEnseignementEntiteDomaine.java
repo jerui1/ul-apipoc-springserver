@@ -1,5 +1,6 @@
 package ca.ulaval.set.apipoc.admission.domaine.entite.etablissementEnseignement;
 
+import ca.ulaval.set.apipoc.admission.domaine.out.repository.etablissementEnseignement.EtablissementEnseignementEntiteRepo;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
@@ -11,6 +12,9 @@ import java.util.UUID;
 @Setter(AccessLevel.NONE)
 @EqualsAndHashCode(exclude = "idEtablissementEnseignement")
 public class EtablissementEnseignementEntiteDomaine {
+
+    @Getter(AccessLevel.NONE)
+    private final EtablissementEnseignementOutillage outillage;
 
     private UUID idEtablissementEnseignement;
 
@@ -28,10 +32,9 @@ public class EtablissementEnseignementEntiteDomaine {
     @NotNull
     private Boolean estEtablissementUniversitaire;
 
-    public static EtablissementEnseignementEntiteDomaine creer(String nomEtablissementEnseignement, String codePays) {
-        EtablissementEnseignementEntiteDomaine nouvelEtablissementEnseignement =
-                new EtablissementEnseignementEntiteDomaine(
-                        UUID.randomUUID(), nomEtablissementEnseignement, codePays, null, true);
-        return nouvelEtablissementEnseignement;
+    public void persister() {
+        EtablissementEnseignementEntiteRepo entiteRepo =
+                this.outillage.getEtablissementEnseignementConvertisseur().toRepo(this);
+        this.outillage.getEtablissementEnseignementRepository().persist(entiteRepo);
     }
 }

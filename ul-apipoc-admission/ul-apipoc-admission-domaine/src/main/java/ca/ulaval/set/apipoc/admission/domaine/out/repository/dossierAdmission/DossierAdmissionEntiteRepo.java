@@ -22,4 +22,5 @@ public class DossierAdmissionEntiteRepo {
 
     @ValidEtablissementEnseignementFrequentes
     private Collection<EtablissementEnseignementFrequenteEntiteRepo> etablissementEnseignementFrequentes;
+
 }

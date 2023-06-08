@@ -1,7 +1,7 @@
 package ca.ulaval.set.apipoc.admission.persistance;
 
 import ca.ulaval.set.apipoc.admission.domaine.out.repository.etablissementEnseignement.EtablissementEnseignementEntiteRepo;
-import ca.ulaval.set.apipoc.admission.domaine.out.repository.etablissementEnseignement.EtablissementEnseignementRepository;
+import ca.ulaval.set.apipoc.admission.domaine.out.repository.etablissementEnseignement.EtablissementEnseignementRepositoryPort;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 
 @Service
 @AllArgsConstructor
-public class EtablissementEnseignementRepositoryJpa implements EtablissementEnseignementRepository {
+public class EtablissementEnseignementRepositoryPortJpa implements EtablissementEnseignementRepositoryPort {
 
     private final EntityManager em;
 
