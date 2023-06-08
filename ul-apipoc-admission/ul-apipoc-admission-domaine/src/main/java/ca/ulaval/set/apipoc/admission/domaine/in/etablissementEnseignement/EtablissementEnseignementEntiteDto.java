@@ -5,7 +5,7 @@ import java.util.UUID;
 import static ca.ulaval.set.apipoc.admission.domaine.in.etablissementEnseignement.EtablissementEnseignementEntiteDomaine_Constraints.*;
 
 public record EtablissementEnseignementEntiteDto(
-        UUID idEtablissement,
+        UUID idEtablissementEnseignement,
         @ValidNomEtablissementEnseignement String nomEtablissementEnseignement,
         @ValidCodePays String codePays,
         @ValidCodeProvinceEtat String codeProvinceEtat,

@@ -15,10 +15,10 @@ import static ca.ulaval.set.apipoc.admission.domaine.out.repository.etablissemen
 @Accessors(chain = true)
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(exclude = "idEtablissement")
+@EqualsAndHashCode(exclude = "idEtablissementEnseignement")
 public class EtablissementEnseignementEntiteRepo {
 
-    private UUID idEtablissement;
+    private UUID idEtablissementEnseignement;
 
     @ValidCodePays
     private String codePays;

@@ -9,7 +9,9 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface EtablissementEnseignementConvertisseur {
 
-    EtablissementEnseignementEntiteDomaine toDomaine(EtablissementEnseignementEntiteRepo repoDto);
+    EtablissementEnseignementEntiteDomaine toDomaine(EtablissementEnseignementEntiteRepo entiteRepo);
 
-    EtablissementEnseignementEntiteDto toDto(EtablissementEnseignementFrequenteEntiteDomaine domaine);
+    EtablissementEnseignementEntiteDto toDto(EtablissementEnseignementFrequenteEntiteDomaine entiteDomaine);
+
+    EtablissementEnseignementEntiteRepo toRepo(EtablissementEnseignementEntiteDomaine entiteDomaine);
 }

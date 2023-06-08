@@ -9,4 +9,5 @@ public interface DossierAdmissionConvertisseur {
 
     DossierAdmissionEntiteDomaine toDomaine(DossierAdmissionEntiteRepo entiteRepo);
 
+    DossierAdmissionEntiteRepo toRepo(DossierAdmissionEntiteDomaine entiteDomaine);
 }

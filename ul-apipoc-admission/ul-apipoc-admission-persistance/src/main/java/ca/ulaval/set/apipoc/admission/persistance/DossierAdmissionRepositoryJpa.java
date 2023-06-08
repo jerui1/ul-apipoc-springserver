@@ -2,41 +2,28 @@ package ca.ulaval.set.apipoc.admission.persistance;
 
 import ca.ulaval.set.apipoc.admission.domaine.out.repository.dossierAdmission.DossierAdmissionEntiteRepo;
 import ca.ulaval.set.apipoc.admission.domaine.out.repository.dossierAdmission.DossierAdmissionRepository;
-import ca.ulaval.set.apipoc.admission.domaine.out.repository.dossierAdmission.EtablissementEnseignementFrequenteEntiteRepo;
-import ca.ulaval.set.apipoc.admission.domaine.out.repository.etablissementEnseignement.EtablissementEnseignementEntiteRepo;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import javax.persistence.EntityManager;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
+@AllArgsConstructor
 public class DossierAdmissionRepositoryJpa implements DossierAdmissionRepository {
 
-    private final ArrayList<EtablissementEnseignementFrequenteEntiteRepo> etablissements;
+    private final EntityManager em;
 
-    public DossierAdmissionRepositoryJpa() {
-        etablissements = new ArrayList<>();
-        etablissements.add(new EtablissementEnseignementFrequenteEntiteRepo()
-                .setIdEtablissementEnseignementFrequente(UUID.randomUUID())
-                        .setVersion(1)
-                .setEtablissementEnseignement(new EtablissementEnseignementEntiteRepo()
-                        .setIdEtablissement(UUID.randomUUID())
-                        .setCodePays("ca")
-                        .setNomEtablissementEnseignement("ULaval")));
-        etablissements.add(new EtablissementEnseignementFrequenteEntiteRepo()
-                .setIdEtablissementEnseignementFrequente(UUID.randomUUID())
-                .setVersion(1)
-                .setEtablissementEnseignement(new EtablissementEnseignementEntiteRepo()
-                        .setIdEtablissement(UUID.randomUUID())
-                        .setCodePays("fr")
-                        .setNomEtablissementEnseignement("Dauphine")));
+    @Override
+    public Optional<DossierAdmissionEntiteRepo> get(UUID idDossierAdmission) {
+        DossierAdmissionEntiteRepo dossierAdmissionEntiteRepo =
+                this.em.find(DossierAdmissionEntiteRepo.class, idDossierAdmission);
+        return Optional.ofNullable(dossierAdmissionEntiteRepo);
     }
 
     @Override
-    public DossierAdmissionEntiteRepo get(UUID idDossierAdmission) {
-        DossierAdmissionEntiteRepo dossierAdmissionEntiteRepo = new DossierAdmissionEntiteRepo()
-                .setIdDossierAdmission(idDossierAdmission)
-                .setEtablissementEnseignementFrequentes(etablissements);
-        return dossierAdmissionEntiteRepo;
+    public void persist(DossierAdmissionEntiteRepo dossierAdmissionEntiteRepo) {
+        this.em.persist(dossierAdmissionEntiteRepo);
     }
 }

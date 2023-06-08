@@ -3,9 +3,7 @@ package ca.ulaval.set.apipoc.admission.domaine.usecase;
 import ca.ulaval.set.apipoc.admission.domaine.entite.dossierAdmission.DossierAdmissionEntiteDomaine;
 import ca.ulaval.set.apipoc.admission.domaine.in.dossierAdmission.EtablissementEnseignementFrequenteEntiteDto;
 import ca.ulaval.set.apipoc.admission.domaine.in.dossierAdmission.RechercheEtablissementEnseignementFrequenteCmdDto;
-import ca.ulaval.set.apipoc.admission.domaine.in.etablissementEnseignement.EtablissementEnseignementEntiteDto;
 import ca.ulaval.set.apipoc.admission.domaine.out.repository.dossierAdmission.DossierAdmissionRepository;
-import ca.ulaval.set.apipoc.admission.domaine.out.repository.dossierAdmission.EtablissementEnseignementFrequenteEntiteRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -31,16 +29,18 @@ public class RechercherEtablissementEnseignementFrequenteQuery {
                     RechercheEtablissementEnseignementFrequenteCmdDto
                             rechercheEtablissementEnseignementFrequenteCmdDto) {
 
-        DossierAdmissionEntiteDomaine dossierAdmissionEntiteDomaine =
-                this.dossierAdmissionConvertisseur.toDomaine(this.dossierAdmissionRepository.get(
-                        rechercheEtablissementEnseignementFrequenteCmdDto.idDossierAdmission()));
+        DossierAdmissionEntiteDomaine dossierAdmissionEntiteDomaine = this.dossierAdmissionRepository
+                .get(rechercheEtablissementEnseignementFrequenteCmdDto.idDossierAdmission())
+                .map(this.dossierAdmissionConvertisseur::toDomaine)
+                .orElseThrow();
 
         List<EtablissementEnseignementFrequenteEntiteDto> etablissementEnseignementEntiteDtos =
                 dossierAdmissionEntiteDomaine
                         .findEtablissementEnseignementFrequentes(
                                 rechercheEtablissementEnseignementFrequenteCmdDto.codePays())
                         .stream()
-                        .map(eef -> this.etablissementEnseignementFrequenteConvertisseur.toDto(eef, dossierAdmissionEntiteDomaine))
+                        .map(eef -> this.etablissementEnseignementFrequenteConvertisseur.toDto(
+                                eef, dossierAdmissionEntiteDomaine))
                         .collect(Collectors.toList());
 
         return etablissementEnseignementEntiteDtos;

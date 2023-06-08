@@ -1,9 +1,13 @@
 package ca.ulaval.set.apipoc.springserver.restapi;
 
 import ca.ulaval.set.apipoc.admission.domaine.in.dossierAdmission.RechercheEtablissementEnseignementFrequenteCmdDto;
+import ca.ulaval.set.apipoc.admission.domaine.usecase.CreerDossierAdmissionUC;
+import ca.ulaval.set.apipoc.admission.domaine.usecase.CreerEtablissementEnseignementUC;
 import ca.ulaval.set.apipoc.admission.domaine.usecase.RechercherEtablissementEnseignementFrequenteQuery;
 import ca.ulaval.set.apipoc.restapi.api.AdmissionApiDelegate;
+import ca.ulaval.set.apipoc.restapi.model.AdmissionCandidatsDossieradmissionPutRequest;
 import ca.ulaval.set.apipoc.restapi.model.EtablissementEnseignementFrequente;
+import ca.ulaval.set.apipoc.restapi.model.PutAdmissionEtablissementenseignementRequest;
 import ca.ulaval.set.apipoc.restapi.model.RechercherEtablissementsEnseignementFrequentes200Response;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +24,10 @@ public class AdmissionApiImpl implements AdmissionApiDelegate {
     private final RechercherEtablissementEnseignementFrequenteQuery rechercherEtablissementEnseignementFrequenteQuery;
     private final EtablissementEnseignementFrequenteConvertisseurRest etablissementEnseignementFrequenteConvertisseur;
 
+    private final CreerDossierAdmissionUC creerDossierAdmissionUC;
+
+    private final CreerEtablissementEnseignementUC creerEtablissementEnseignementUC;
+
     @Override
     public ResponseEntity<RechercherEtablissementsEnseignementFrequentes200Response>
             rechercherEtablissementsEnseignementFrequentes(UUID idDossierAdmission, String codePays) {
@@ -31,5 +39,24 @@ public class AdmissionApiImpl implements AdmissionApiDelegate {
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok(new RechercherEtablissementsEnseignementFrequentes200Response(resultats));
+    }
+
+    @Override
+    public ResponseEntity<Void> admissionCandidatsDossieradmissionPut(
+            AdmissionCandidatsDossieradmissionPutRequest putRequest) {
+
+        this.creerDossierAdmissionUC.apply(putRequest.getNi());
+
+        return ResponseEntity.ok(null);
+    }
+
+    @Override
+    public ResponseEntity<Void> putAdmissionEtablissementenseignement(
+            PutAdmissionEtablissementenseignementRequest putRequest) {
+
+        this.creerEtablissementEnseignementUC.apply(
+                putRequest.getNomEtablissementEnseignement(), putRequest.getCodePays());
+
+        return ResponseEntity.ok(null);
     }
 }

@@ -1,7 +1,6 @@
 package ca.ulaval.set.apipoc.admission.domaine.entite.etablissementEnseignement;
 
 import lombok.*;
-import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -10,10 +9,10 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @Setter(AccessLevel.NONE)
-@EqualsAndHashCode(exclude = "idEtablissement")
+@EqualsAndHashCode(exclude = "idEtablissementEnseignement")
 public class EtablissementEnseignementEntiteDomaine {
 
-    private UUID idEtablissement;
+    private UUID idEtablissementEnseignement;
 
     @NotNull
     @Size(min = 2)
@@ -28,4 +27,11 @@ public class EtablissementEnseignementEntiteDomaine {
 
     @NotNull
     private Boolean estEtablissementUniversitaire;
+
+    public static EtablissementEnseignementEntiteDomaine creer(String nomEtablissementEnseignement, String codePays) {
+        EtablissementEnseignementEntiteDomaine nouvelEtablissementEnseignement =
+                new EtablissementEnseignementEntiteDomaine(
+                        UUID.randomUUID(), nomEtablissementEnseignement, codePays, null, true);
+        return nouvelEtablissementEnseignement;
+    }
 }

@@ -1,0 +1,31 @@
+<entity-mappings version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                 xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm
+    http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd">
+
+    <entity class="ca.ulaval.set.apipoc.admission.domaine.out.repository.dossierAdmission.DossierAdmissionEntiteRepo">
+        <attributes>
+            <id name="idDossierAdmission"/>
+            <one-to-many name="etablissementEnseignementFrequentes" orphan-removal="true">
+                <cascade>
+                    <cascade-all/>
+                </cascade>
+            </one-to-many>
+        </attributes>
+    </entity>
+
+    <entity class="ca.ulaval.set.apipoc.admission.domaine.out.repository.dossierAdmission.EtablissementEnseignementFrequenteEntiteRepo">
+        <attributes>
+            <id name="idEtablissementEnseignementFrequente"/>
+            <many-to-one name="etablissementEnseignement">
+
+            </many-to-one>
+        </attributes>
+    </entity>
+
+    <entity class="ca.ulaval.set.apipoc.admission.domaine.out.repository.etablissementEnseignement.EtablissementEnseignementEntiteRepo">
+        <attributes>
+            <id name="idEtablissementEnseignement"/>
+        </attributes>
+    </entity>
+</entity-mappings>
