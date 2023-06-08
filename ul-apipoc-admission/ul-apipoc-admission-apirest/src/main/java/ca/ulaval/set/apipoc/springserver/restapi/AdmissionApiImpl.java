@@ -1,14 +1,11 @@
 package ca.ulaval.set.apipoc.springserver.restapi;
 
+import ca.ulaval.set.apipoc.admission.domaine.in.dossierAdmission.DossierAdmissionEntiteDto;
 import ca.ulaval.set.apipoc.admission.domaine.in.dossierAdmission.RechercheEtablissementEnseignementFrequenteCmdDto;
-import ca.ulaval.set.apipoc.admission.domaine.usecase.CreerDossierAdmissionUC;
-import ca.ulaval.set.apipoc.admission.domaine.usecase.CreerEtablissementEnseignementUC;
-import ca.ulaval.set.apipoc.admission.domaine.usecase.RechercherEtablissementEnseignementFrequenteQuery;
+import ca.ulaval.set.apipoc.admission.domaine.in.etablissementEnseignement.EtablissementEnseignementEntiteDto;
+import ca.ulaval.set.apipoc.admission.domaine.usecase.*;
 import ca.ulaval.set.apipoc.restapi.api.AdmissionApiDelegate;
-import ca.ulaval.set.apipoc.restapi.model.AdmissionCandidatsDossieradmissionPutRequest;
-import ca.ulaval.set.apipoc.restapi.model.EtablissementEnseignementFrequente;
-import ca.ulaval.set.apipoc.restapi.model.PutAdmissionEtablissementenseignementRequest;
-import ca.ulaval.set.apipoc.restapi.model.RechercherEtablissementsEnseignementFrequentes200Response;
+import ca.ulaval.set.apipoc.restapi.model.*;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -27,6 +24,12 @@ public class AdmissionApiImpl implements AdmissionApiDelegate {
     private final CreerDossierAdmissionUC creerDossierAdmissionUC;
 
     private final CreerEtablissementEnseignementUC creerEtablissementEnseignementUC;
+    private final RechercherEtablissementEnseignementsQuery rechercherEtablissementEnseignementsQuery;
+    private final EtablissementEnseignementConvertisseurRest etablissementEnseignementConvertisseur;
+
+    private final CreerEtablissementEnseignementFrequenteUC creerEtablissementEnseignementFrequenteUC;
+    private final RechercherDossierAdmissionsQuery rechercheDossierAdmissionsQuery;
+    private final DossierAdmissionConvertisseurRest dossierAdmissionConvertisseur;
 
     @Override
     public ResponseEntity<RechercherEtablissementsEnseignementFrequentes200Response>
@@ -42,21 +45,57 @@ public class AdmissionApiImpl implements AdmissionApiDelegate {
     }
 
     @Override
-    public ResponseEntity<Void> admissionCandidatsDossieradmissionPut(
+    public ResponseEntity<UUID> admissionCandidatsDossieradmissionPut(
             AdmissionCandidatsDossieradmissionPutRequest putRequest) {
 
-        this.creerDossierAdmissionUC.apply(putRequest.getNi());
+        UUID id = this.creerDossierAdmissionUC.apply(putRequest.getNi());
 
-        return ResponseEntity.ok(null);
+        return ResponseEntity.ok(id);
     }
 
     @Override
-    public ResponseEntity<Void> putAdmissionEtablissementenseignement(
+    public ResponseEntity<UUID> putAdmissionEtablissementenseignement(
             PutAdmissionEtablissementenseignementRequest putRequest) {
 
-        this.creerEtablissementEnseignementUC.apply(
+        UUID id = this.creerEtablissementEnseignementUC.apply(
                 putRequest.getNomEtablissementEnseignement(), putRequest.getCodePays());
 
-        return ResponseEntity.ok(null);
+        return ResponseEntity.ok(id);
+    }
+
+    @Override
+    public ResponseEntity<List<EtablissementEnseignement>> getAdmissionEtablissementenseignement() {
+
+        List<EtablissementEnseignementEntiteDto> dtoList = this.rechercherEtablissementEnseignementsQuery.apply();
+        List<EtablissementEnseignement> apiList = dtoList.stream()
+                .map(this.etablissementEnseignementConvertisseur::toRest)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(apiList);
+    }
+
+    @Override
+    public ResponseEntity<List<DossierAdmission>> getDossieradmission(String ni) {
+
+        List<DossierAdmissionEntiteDto> dtoList = this.rechercheDossierAdmissionsQuery.apply(ni);
+        List<DossierAdmission> restList =
+                dtoList.stream().map(this.dossierAdmissionConvertisseur::toRest).collect(Collectors.toList());
+
+        return ResponseEntity.ok(restList);
+    }
+
+    @Override
+    public ResponseEntity<UUID> putEtablissementenseignementfrequente(
+            UUID iddossieradmission, PutEtablissementenseignementfrequenteRequest putRequest) {
+        UUID uuid = this.creerEtablissementEnseignementFrequenteUC.apply(
+                iddossieradmission, putRequest.getIdEtablissementEnseignement());
+        return ResponseEntity.ok(uuid);
+    }
+
+    @Override
+    public ResponseEntity<UUID> putAdmissionCandidatsEtudesanterieuresEtablissementsenseignementfrequentes(
+            EtablissementEnseignementFrequente etablissementEnseignementFrequente) {
+        return AdmissionApiDelegate.super.putAdmissionCandidatsEtudesanterieuresEtablissementsenseignementfrequentes(
+                etablissementEnseignementFrequente);
     }
 }

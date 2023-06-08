@@ -8,10 +8,12 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 @AllArgsConstructor
@@ -22,27 +24,28 @@ public class RechercherEtablissementEnseignementFrequenteQuery {
     private final DossierAdmissionConvertisseur dossierAdmissionConvertisseur;
     private final EtablissementEnseignementFrequenteConvertisseur etablissementEnseignementFrequenteConvertisseur;
 
+    @Transactional
     @NotNull
     @Valid
     public List<EtablissementEnseignementFrequenteEntiteDto> apply(
-            @NotNull @Valid
-                    RechercheEtablissementEnseignementFrequenteCmdDto
-                            rechercheEtablissementEnseignementFrequenteCmdDto) {
+            @NotNull @Valid RechercheEtablissementEnseignementFrequenteCmdDto rechercheCmdDto) {
 
-        DossierAdmissionEntiteDomaine dossierAdmissionEntiteDomaine = this.dossierAdmissionRepository
-                .get(rechercheEtablissementEnseignementFrequenteCmdDto.idDossierAdmission())
+        List<EtablissementEnseignementFrequenteEntiteDto> list = this.dossierAdmissionRepository
+                .find(null)
                 .map(this.dossierAdmissionConvertisseur::toDomaine)
-                .orElseThrow();
+                .flatMap((DossierAdmissionEntiteDomaine dossierAdmissionEntiteDomaine) ->
+                        toEtablissementFrequenteDtos(dossierAdmissionEntiteDomaine, rechercheCmdDto.codePays()))
+                .collect(Collectors.toList());
 
-        List<EtablissementEnseignementFrequenteEntiteDto> etablissementEnseignementEntiteDtos =
-                dossierAdmissionEntiteDomaine
-                        .findEtablissementEnseignementFrequentes(
-                                rechercheEtablissementEnseignementFrequenteCmdDto.codePays())
-                        .stream()
-                        .map(eef -> this.etablissementEnseignementFrequenteConvertisseur.toDto(
-                                eef, dossierAdmissionEntiteDomaine))
-                        .collect(Collectors.toList());
+        return list;
+    }
 
-        return etablissementEnseignementEntiteDtos;
+    private Stream<EtablissementEnseignementFrequenteEntiteDto> toEtablissementFrequenteDtos(
+            DossierAdmissionEntiteDomaine dossierAdmissionEntiteDomaine, String codePays) {
+        return dossierAdmissionEntiteDomaine.getEtablissementEnseignementFrequentes().stream()
+                .filter(eef -> codePays == null
+                        || eef.getEtablissementEnseignement().getCodePays().equalsIgnoreCase(codePays))
+                .map(eef ->
+                        this.etablissementEnseignementFrequenteConvertisseur.toDto(eef, dossierAdmissionEntiteDomaine));
     }
 }

@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -17,11 +18,13 @@ public class CreerEtablissementEnseignementUC {
 
     private final EtablissementEnseignementRepository etablissementEnseignementRepository;
 
-    public void apply(String nomEtablissementEnseignement, String codePays) {
+    public UUID apply(String nomEtablissementEnseignement, String codePays) {
         EtablissementEnseignementEntiteDomaine etablissementEnseignementEntiteDomaine =
                 EtablissementEnseignementEntiteDomaine.creer(nomEtablissementEnseignement, codePays);
         EtablissementEnseignementEntiteRepo etablissementEnseignementEntiteRepo =
                 this.etablissementEnseignementConvertisseur.toRepo(etablissementEnseignementEntiteDomaine);
         this.etablissementEnseignementRepository.persist(etablissementEnseignementEntiteRepo);
+
+        return etablissementEnseignementEntiteDomaine.getIdEtablissementEnseignement();
     }
 }

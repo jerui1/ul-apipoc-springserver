@@ -5,7 +5,9 @@
 
     <entity class="ca.ulaval.set.apipoc.admission.domaine.out.repository.dossierAdmission.DossierAdmissionEntiteRepo">
         <attributes>
-            <id name="idDossierAdmission"/>
+            <id name="idDossierAdmission">
+                <column length="16"/>
+            </id>
             <one-to-many name="etablissementEnseignementFrequentes" orphan-removal="true">
                 <cascade>
                     <cascade-all/>
@@ -16,7 +18,9 @@
 
     <entity class="ca.ulaval.set.apipoc.admission.domaine.out.repository.dossierAdmission.EtablissementEnseignementFrequenteEntiteRepo">
         <attributes>
-            <id name="idEtablissementEnseignementFrequente"/>
+            <id name="idEtablissementEnseignementFrequente">
+                <column length="16"/>
+            </id>
             <many-to-one name="etablissementEnseignement">
 
             </many-to-one>
@@ -25,7 +29,9 @@
 
     <entity class="ca.ulaval.set.apipoc.admission.domaine.out.repository.etablissementEnseignement.EtablissementEnseignementEntiteRepo">
         <attributes>
-            <id name="idEtablissementEnseignement"/>
+            <id name="idEtablissementEnseignement">
+                <column length="16"/>
+            </id>
         </attributes>
     </entity>
 </entity-mappings>

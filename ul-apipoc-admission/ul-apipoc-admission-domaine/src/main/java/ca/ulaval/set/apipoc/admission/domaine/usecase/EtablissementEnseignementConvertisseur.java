@@ -11,7 +11,7 @@ public interface EtablissementEnseignementConvertisseur {
 
     EtablissementEnseignementEntiteDomaine toDomaine(EtablissementEnseignementEntiteRepo entiteRepo);
 
-    EtablissementEnseignementEntiteDto toDto(EtablissementEnseignementFrequenteEntiteDomaine entiteDomaine);
+    EtablissementEnseignementEntiteDto toDto(EtablissementEnseignementEntiteDomaine entiteDomaine);
 
     EtablissementEnseignementEntiteRepo toRepo(EtablissementEnseignementEntiteDomaine entiteDomaine);
 }

@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -16,7 +17,7 @@ public class CreerDossierAdmissionUC {
     private final DossierAdmissionConvertisseur dossierAdmissionConvertisseur;
     private final DossierAdmissionRepository dossierAdmissionRepository;
 
-    public void apply(String ni) {
+    public UUID apply(String ni) {
         DossierAdmissionEntiteDomaine nouveauDossierAdmission = DossierAdmissionEntiteDomaine.creer(ni);
 
         // Autre approche possible
@@ -25,5 +26,7 @@ public class CreerDossierAdmissionUC {
         DossierAdmissionEntiteRepo dossierAdmissionEntiteRepo =
                 this.dossierAdmissionConvertisseur.toRepo(nouveauDossierAdmission);
         this.dossierAdmissionRepository.persist(dossierAdmissionEntiteRepo);
+
+        return nouveauDossierAdmission.getIdDossierAdmission();
     }
 }
