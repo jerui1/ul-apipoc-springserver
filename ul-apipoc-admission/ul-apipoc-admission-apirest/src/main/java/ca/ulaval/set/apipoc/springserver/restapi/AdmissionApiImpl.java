@@ -1,9 +1,9 @@
 package ca.ulaval.set.apipoc.springserver.restapi;
 
-import ca.ulaval.set.apipoc.admission.domaine.in.dossierAdmission.DossierAdmissionEntiteDto;
-import ca.ulaval.set.apipoc.admission.domaine.in.dossierAdmission.RechercheEtablissementEnseignementFrequenteCmdDto;
-import ca.ulaval.set.apipoc.admission.domaine.in.etablissementEnseignement.EtablissementEnseignementEntiteDto;
-import ca.ulaval.set.apipoc.admission.domaine.usecase.*;
+import ca.ulaval.set.apipoc.admission.application.in.dossierAdmission.DossierAdmissionEntiteDto;
+import ca.ulaval.set.apipoc.admission.application.in.dossierAdmission.RechercheEtablissementEnseignementFrequenteCmdDto;
+import ca.ulaval.set.apipoc.admission.application.in.etablissementEnseignement.EtablissementEnseignementEntiteDto;
+import ca.ulaval.set.apipoc.admission.application.usecase.*;
 import ca.ulaval.set.apipoc.restapi.api.AdmissionApiDelegate;
 import ca.ulaval.set.apipoc.restapi.model.*;
 import lombok.AllArgsConstructor;

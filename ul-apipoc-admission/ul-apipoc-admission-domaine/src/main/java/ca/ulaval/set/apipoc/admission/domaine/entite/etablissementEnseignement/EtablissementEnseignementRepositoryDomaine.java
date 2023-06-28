@@ -1,7 +1,7 @@
 package ca.ulaval.set.apipoc.admission.domaine.entite.etablissementEnseignement;
 
-import ca.ulaval.set.apipoc.admission.domaine.adapter.convertisseur.EtablissementEnseignementConvertisseur;
-import ca.ulaval.set.apipoc.admission.domaine.out.repository.etablissementEnseignement.EtablissementEnseignementRepositoryPort;
+import ca.ulaval.set.apipoc.admission.application.adapter.convertisseur.EtablissementEnseignementConvertisseur;
+import ca.ulaval.set.apipoc.admission.application.out.repository.etablissementEnseignement.EtablissementEnseignementRepositoryPort;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,15 +15,16 @@ public class EtablissementEnseignementRepositoryDomaine {
 
     private final EtablissementEnseignementRepositoryPort etablissementEnseignementRepository;
     private final EtablissementEnseignementConvertisseur etablissementEnseignementConvertisseur;
+    private final EtablissementEnseignementEntiteDomaine.Outillage outillage;
 
     public Stream<EtablissementEnseignementEntiteDomaine> find() {
         Stream<EtablissementEnseignementEntiteDomaine> stream = this.etablissementEnseignementRepository.find()
-                .map(this.etablissementEnseignementConvertisseur::toDomaine);
+                .map(ee -> this.etablissementEnseignementConvertisseur.toDomaine(ee, outillage));
         return stream;
     }
 
     public Optional<EtablissementEnseignementEntiteDomaine> get(UUID idEtablissementEnseignement) {
         return this.etablissementEnseignementRepository.get(idEtablissementEnseignement)
-                .map(this.etablissementEnseignementConvertisseur::toDomaine);
+                .map(ee -> this.etablissementEnseignementConvertisseur.toDomaine(ee, outillage));
     }
 }

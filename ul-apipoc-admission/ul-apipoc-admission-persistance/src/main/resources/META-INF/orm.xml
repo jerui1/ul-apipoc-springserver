@@ -3,7 +3,7 @@
                  xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm
     http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd">
 
-    <entity class="ca.ulaval.set.apipoc.admission.domaine.out.repository.dossierAdmission.DossierAdmissionEntiteRepo">
+    <entity class="ca.ulaval.set.apipoc.admission.application.out.repository.dossierAdmission.DossierAdmissionEntiteRepo">
         <attributes>
             <id name="idDossierAdmission">
                 <column length="16"/>
@@ -16,7 +16,7 @@
         </attributes>
     </entity>
 
-    <entity class="ca.ulaval.set.apipoc.admission.domaine.out.repository.dossierAdmission.EtablissementEnseignementFrequenteEntiteRepo">
+    <entity class="ca.ulaval.set.apipoc.admission.application.out.repository.dossierAdmission.EtablissementEnseignementFrequenteEntiteRepo">
         <attributes>
             <id name="idEtablissementEnseignementFrequente">
                 <column length="16"/>
@@ -27,7 +27,7 @@
         </attributes>
     </entity>
 
-    <entity class="ca.ulaval.set.apipoc.admission.domaine.out.repository.etablissementEnseignement.EtablissementEnseignementEntiteRepo">
+    <entity class="ca.ulaval.set.apipoc.admission.application.out.repository.etablissementEnseignement.EtablissementEnseignementEntiteRepo">
         <attributes>
             <id name="idEtablissementEnseignement">
                 <column length="16"/>

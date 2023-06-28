@@ -1,6 +1,6 @@
 package ca.ulaval.set.apipoc.admission.domaine.entite.dossierAdmission;
 
-import ca.ulaval.set.apipoc.admission.domaine.adapter.outillage.DossierAdmissionOutillage;
+import ca.ulaval.set.apipoc.admission.application.adapter.outillage.DossierAdmissionOutillage;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

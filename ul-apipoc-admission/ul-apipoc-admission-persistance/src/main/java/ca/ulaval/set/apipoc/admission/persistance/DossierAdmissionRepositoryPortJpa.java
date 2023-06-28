@@ -1,8 +1,8 @@
 package ca.ulaval.set.apipoc.admission.persistance;
 
-import ca.ulaval.set.apipoc.admission.domaine.out.repository.dossierAdmission.DossierAdmissionEntiteRepo;
-import ca.ulaval.set.apipoc.admission.domaine.out.repository.dossierAdmission.DossierAdmissionRepositoryPort;
-import ca.ulaval.set.apipoc.admission.domaine.out.repository.dossierAdmission.EtablissementEnseignementFrequenteEntiteRepo;
+import ca.ulaval.set.apipoc.admission.application.out.repository.dossierAdmission.DossierAdmissionEntiteRepo;
+import ca.ulaval.set.apipoc.admission.application.out.repository.dossierAdmission.DossierAdmissionRepositoryPort;
+import ca.ulaval.set.apipoc.admission.application.out.repository.dossierAdmission.EtablissementEnseignementFrequenteEntiteRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

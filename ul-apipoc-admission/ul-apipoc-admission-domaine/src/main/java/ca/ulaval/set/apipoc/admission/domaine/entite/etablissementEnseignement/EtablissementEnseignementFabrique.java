@@ -1,6 +1,6 @@
 package ca.ulaval.set.apipoc.admission.domaine.entite.etablissementEnseignement;
 
-import ca.ulaval.set.apipoc.admission.domaine.adapter.outillage.EtablissementEnseignementOutillage;
+import ca.ulaval.set.apipoc.admission.application.adapter.outillage.EtablissementEnseignementOutillage;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
