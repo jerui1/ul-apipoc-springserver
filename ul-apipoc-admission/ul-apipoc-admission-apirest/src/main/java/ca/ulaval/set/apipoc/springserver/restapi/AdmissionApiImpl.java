@@ -1,9 +1,9 @@
 package ca.ulaval.set.apipoc.springserver.restapi;
 
-import ca.ulaval.set.apipoc.admission.application.in.dossierAdmission.DossierAdmissionEntiteDto;
-import ca.ulaval.set.apipoc.admission.application.in.dossierAdmission.RechercheEtablissementEnseignementFrequenteCmdDto;
+import ca.ulaval.set.apipoc.admission.application.in.dossierAdmission.*;
+import ca.ulaval.set.apipoc.admission.application.in.etablissementEnseignement.CreerEtablissementEnseignementUCPort;
 import ca.ulaval.set.apipoc.admission.application.in.etablissementEnseignement.EtablissementEnseignementEntiteDto;
-import ca.ulaval.set.apipoc.admission.application.usecase.*;
+import ca.ulaval.set.apipoc.admission.application.in.etablissementEnseignement.RechercherEtablissementEnseignementsQueryPort;
 import ca.ulaval.set.apipoc.restapi.api.AdmissionApiDelegate;
 import ca.ulaval.set.apipoc.restapi.model.*;
 import lombok.AllArgsConstructor;
@@ -18,17 +18,17 @@ import java.util.stream.Collectors;
 @Service
 public class AdmissionApiImpl implements AdmissionApiDelegate {
 
-    private final RechercherEtablissementEnseignementFrequenteQuery rechercherEtablissementEnseignementFrequenteQuery;
+    private final RechercherEtablissementEnseignementFrequenteQueryPort rechercherEtablissementEnseignementFrequenteQuery;
     private final EtablissementEnseignementFrequenteConvertisseurRest etablissementEnseignementFrequenteConvertisseur;
 
-    private final CreerDossierAdmissionUC creerDossierAdmissionUC;
+    private final CreerDossierAdmissionUCPort creerDossierAdmissionUCPort;
 
-    private final CreerEtablissementEnseignementUC creerEtablissementEnseignementUC;
-    private final RechercherEtablissementEnseignementsQuery rechercherEtablissementEnseignementsQuery;
+    private final CreerEtablissementEnseignementUCPort creerEtablissementEnseignementUC;
+    private final RechercherEtablissementEnseignementsQueryPort rechercherEtablissementEnseignementsQuery;
     private final EtablissementEnseignementConvertisseurRest etablissementEnseignementConvertisseur;
 
-    private final CreerEtablissementEnseignementFrequenteUC creerEtablissementEnseignementFrequenteUC;
-    private final RechercherDossierAdmissionsQuery rechercheDossierAdmissionsQuery;
+    private final CreerEtablissementEnseignementFrequenteUCPort creerEtablissementEnseignementFrequenteUC;
+    private final RechercherDossierAdmissionsQueryPort rechercheDossierAdmissionsQuery;
     private final DossierAdmissionConvertisseurRest dossierAdmissionConvertisseur;
 
     @Override
@@ -36,7 +36,7 @@ public class AdmissionApiImpl implements AdmissionApiDelegate {
             rechercherEtablissementsEnseignementFrequentes(UUID idDossierAdmission, String codePays) {
 
         List<EtablissementEnseignementFrequente> resultats = this.rechercherEtablissementEnseignementFrequenteQuery
-                .apply(new RechercheEtablissementEnseignementFrequenteCmdDto(idDossierAdmission, codePays))
+                .apply(new RechercherEtablissementEnseignementFrequenteQueryPort.RechercheEtablissementEnseignementFrequenteCmdDto(idDossierAdmission, codePays))
                 .stream()
                 .map(this.etablissementEnseignementFrequenteConvertisseur::toRest)
                 .collect(Collectors.toList());
@@ -48,7 +48,7 @@ public class AdmissionApiImpl implements AdmissionApiDelegate {
     public ResponseEntity<UUID> admissionCandidatsDossieradmissionPut(
             AdmissionCandidatsDossieradmissionPutRequest putRequest) {
 
-        UUID id = this.creerDossierAdmissionUC.apply(putRequest.getNi());
+        UUID id = this.creerDossierAdmissionUCPort.apply(putRequest.getNi());
 
         return ResponseEntity.ok(id);
     }

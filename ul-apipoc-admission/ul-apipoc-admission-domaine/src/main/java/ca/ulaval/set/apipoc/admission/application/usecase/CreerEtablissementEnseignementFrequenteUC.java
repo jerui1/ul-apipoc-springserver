@@ -1,5 +1,6 @@
 package ca.ulaval.set.apipoc.admission.application.usecase;
 
+import ca.ulaval.set.apipoc.admission.application.in.dossierAdmission.CreerEtablissementEnseignementFrequenteUCPort;
 import ca.ulaval.set.apipoc.admission.domaine.entite.dossierAdmission.DossierAdmissionEntiteDomaine;
 import ca.ulaval.set.apipoc.admission.domaine.entite.dossierAdmission.DossierAdmissionRepositoryDomaine;
 import ca.ulaval.set.apipoc.admission.domaine.entite.dossierAdmission.EtablissementEnseignementFrequenteEntiteDomaine;
@@ -11,10 +12,11 @@ import java.util.UUID;
 
 @Service
 @AllArgsConstructor
-public class CreerEtablissementEnseignementFrequenteUC {
+public class CreerEtablissementEnseignementFrequenteUC implements CreerEtablissementEnseignementFrequenteUCPort {
 
     private final DossierAdmissionRepositoryDomaine repositoryDomaine;
 
+    @Override
     @Transactional
     public UUID apply(UUID idDossierAdmission, UUID idEtablissementEnseignement) {
         DossierAdmissionEntiteDomaine dossierAdmissionEntiteDomaine =

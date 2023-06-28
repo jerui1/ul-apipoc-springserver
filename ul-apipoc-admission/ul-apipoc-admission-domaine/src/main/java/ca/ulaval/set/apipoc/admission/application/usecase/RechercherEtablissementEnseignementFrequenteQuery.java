@@ -2,8 +2,8 @@ package ca.ulaval.set.apipoc.admission.application.usecase;
 
 import ca.ulaval.set.apipoc.admission.application.adapter.convertisseur.EtablissementEnseignementFrequenteConvertisseur;
 import ca.ulaval.set.apipoc.admission.application.in.dossierAdmission.EtablissementEnseignementFrequenteEntiteDto;
+import ca.ulaval.set.apipoc.admission.application.in.dossierAdmission.RechercherEtablissementEnseignementFrequenteQueryPort;
 import ca.ulaval.set.apipoc.admission.domaine.entite.dossierAdmission.DossierAdmissionRepositoryDomaine;
-import ca.ulaval.set.apipoc.admission.application.in.dossierAdmission.RechercheEtablissementEnseignementFrequenteCmdDto;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
@@ -17,11 +17,13 @@ import java.util.stream.Collectors;
 @Service
 @AllArgsConstructor
 @Validated
-public class RechercherEtablissementEnseignementFrequenteQuery {
+public class RechercherEtablissementEnseignementFrequenteQuery
+        implements RechercherEtablissementEnseignementFrequenteQueryPort {
 
     private final DossierAdmissionRepositoryDomaine dossierAdmissionRepositoryDomaine;
     private final EtablissementEnseignementFrequenteConvertisseur etablissementEnseignementFrequenteConvertisseur;
 
+    @Override
     @Transactional
     @NotNull
     @Valid
