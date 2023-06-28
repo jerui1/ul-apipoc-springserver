@@ -5,8 +5,8 @@ import java.util.function.Function;
 
 public class LazyTransformedList<S,T> implements List<T> {
 
-    private final List<S> originalList;
-    private final Function<S, T> transformer;
+    private List<S> originalList;
+    private Function<S, T> transformer;
     private List<T> transformedList;
 
     public LazyTransformedList(List<S> originalList, Function<S,T> transformer) {
@@ -145,6 +145,10 @@ public class LazyTransformedList<S,T> implements List<T> {
         ArrayList<T> tmpList = new ArrayList<>();
         this.originalList.forEach(s -> tmpList.add(this.transformer.apply(s)));
         this.transformedList = tmpList;
+
+        this.originalList = null;
+        this.transformer = null;
+
         return this.transformedList;
     }
 }
