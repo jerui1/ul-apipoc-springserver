@@ -2,7 +2,7 @@ package ca.ulaval.set.apipoc.admission.application.usecase;
 
 import ca.ulaval.set.apipoc.admission.application.in.dossierAdmission.CreerEtablissementEnseignementFrequenteUCPort;
 import ca.ulaval.set.apipoc.admission.domaine.entite.dossierAdmission.DossierAdmissionEntiteDomaine;
-import ca.ulaval.set.apipoc.admission.domaine.entite.dossierAdmission.DossierAdmissionRepositoryDomaine;
+import ca.ulaval.set.apipoc.admission.application.adapter.dossierAdmission.DossierAdmissionRepositoryDomaine;
 import ca.ulaval.set.apipoc.admission.domaine.entite.dossierAdmission.EtablissementEnseignementFrequenteEntiteDomaine;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

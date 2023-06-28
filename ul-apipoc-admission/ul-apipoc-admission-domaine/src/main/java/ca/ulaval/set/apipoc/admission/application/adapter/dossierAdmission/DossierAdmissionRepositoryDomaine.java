@@ -1,10 +1,11 @@
-package ca.ulaval.set.apipoc.admission.domaine.entite.dossierAdmission;
+package ca.ulaval.set.apipoc.admission.application.adapter.dossierAdmission;
 
 import ca.ulaval.set.apipoc.admission.domaine.entite.Paire;
-import ca.ulaval.set.apipoc.admission.application.adapter.convertisseur.DossierAdmissionConvertisseur;
 import ca.ulaval.set.apipoc.admission.application.out.repository.dossierAdmission.DossierAdmissionEntiteRepo;
 import ca.ulaval.set.apipoc.admission.application.out.repository.dossierAdmission.DossierAdmissionRepositoryPort;
-import ca.ulaval.set.apipoc.admission.application.adapter.outillage.DossierAdmissionOutillage;
+import ca.ulaval.set.apipoc.admission.domaine.entite.dossierAdmission.DossierAdmissionEntiteDomaine;
+import ca.ulaval.set.apipoc.admission.domaine.entite.dossierAdmission.DossierAdmissionRepositoryDomainePort;
+import ca.ulaval.set.apipoc.admission.domaine.entite.dossierAdmission.EtablissementEnseignementFrequenteEntiteDomaine;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,12 +15,13 @@ import java.util.stream.Stream;
 
 @Service
 @AllArgsConstructor
-public class DossierAdmissionRepositoryDomaine {
+public class DossierAdmissionRepositoryDomaine implements DossierAdmissionRepositoryDomainePort {
 
     private final DossierAdmissionOutillage outillage;
     private final DossierAdmissionRepositoryPort repository;
     private final DossierAdmissionConvertisseur convertisseur;
 
+    @Override
     public Optional<DossierAdmissionEntiteDomaine> get(UUID idDossierAdmission) {
         return this.repository
                 .getDossierAdmission(idDossierAdmission)
@@ -27,6 +29,7 @@ public class DossierAdmissionRepositoryDomaine {
                         this.convertisseur.toDomaine(entiteRepo, this.outillage));
     }
 
+    @Override
     public Stream<DossierAdmissionEntiteDomaine> find(String ni) {
         return this.repository
                 .find(ni)
@@ -34,6 +37,7 @@ public class DossierAdmissionRepositoryDomaine {
                         this.convertisseur.toDomaine(entiteRepo, this.outillage));
     }
 
+    @Override
     public Stream<Paire<DossierAdmissionEntiteDomaine, EtablissementEnseignementFrequenteEntiteDomaine>>
             findEtablissementEnseignementFrequente(String codePays) {
 

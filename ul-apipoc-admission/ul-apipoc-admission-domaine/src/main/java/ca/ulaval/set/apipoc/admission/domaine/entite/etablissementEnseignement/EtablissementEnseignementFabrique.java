@@ -1,6 +1,5 @@
 package ca.ulaval.set.apipoc.admission.domaine.entite.etablissementEnseignement;
 
-import ca.ulaval.set.apipoc.admission.application.adapter.outillage.EtablissementEnseignementOutillage;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +9,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class EtablissementEnseignementFabrique {
 
-    private final EtablissementEnseignementOutillage outillage;
+    private final EtablissementEnseignementEntiteDomaine.Outillage outillage;
 
     public EtablissementEnseignementEntiteDomaine creer(String nomEtablissementEnseignement, String codePays) {
         EtablissementEnseignementEntiteDomaine nouvelEtablissementEnseignement =

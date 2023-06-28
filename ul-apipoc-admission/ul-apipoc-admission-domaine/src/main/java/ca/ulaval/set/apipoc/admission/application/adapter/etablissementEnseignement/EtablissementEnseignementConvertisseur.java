@@ -1,4 +1,4 @@
-package ca.ulaval.set.apipoc.admission.application.adapter.convertisseur;
+package ca.ulaval.set.apipoc.admission.application.adapter.etablissementEnseignement;
 
 import ca.ulaval.set.apipoc.admission.application.in.etablissementEnseignement.EtablissementEnseignementEntiteDto;
 import ca.ulaval.set.apipoc.admission.application.out.repository.etablissementEnseignement.EtablissementEnseignementEntiteRepo;

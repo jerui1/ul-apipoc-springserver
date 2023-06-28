@@ -1,13 +1,13 @@
-package ca.ulaval.set.apipoc.admission.application.adapter.convertisseur;
+package ca.ulaval.set.apipoc.admission.application.adapter.dossierAdmission;
 
+import ca.ulaval.set.apipoc.admission.application.adapter.LazyTransformedList;
 import ca.ulaval.set.apipoc.admission.application.in.dossierAdmission.DossierAdmissionEntiteDto;
-import ca.ulaval.set.apipoc.admission.application.adapter.outillage.DossierAdmissionOutillage;
 import ca.ulaval.set.apipoc.admission.domaine.entite.dossierAdmission.DossierAdmissionEntiteDomaine;
 import ca.ulaval.set.apipoc.admission.application.out.repository.dossierAdmission.DossierAdmissionEntiteRepo;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-@Mapper(componentModel = "spring", uses = EtablissementEnseignementFrequenteConvertisseur.class)
+@Mapper(componentModel = "spring", uses = EtablissementEnseignementFrequenteConvertisseur.class, imports = LazyTransformedList.class)
 public interface DossierAdmissionConvertisseur {
 
     @Mapping(

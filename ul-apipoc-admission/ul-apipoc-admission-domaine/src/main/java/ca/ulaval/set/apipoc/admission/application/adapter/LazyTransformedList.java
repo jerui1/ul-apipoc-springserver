@@ -1,4 +1,4 @@
-package ca.ulaval.set.apipoc.admission.application.adapter.convertisseur;
+package ca.ulaval.set.apipoc.admission.application.adapter;
 
 import java.util.*;
 import java.util.function.Function;

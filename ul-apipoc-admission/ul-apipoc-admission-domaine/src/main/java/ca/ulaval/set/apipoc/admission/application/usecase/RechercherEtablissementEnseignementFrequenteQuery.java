@@ -1,9 +1,9 @@
 package ca.ulaval.set.apipoc.admission.application.usecase;
 
-import ca.ulaval.set.apipoc.admission.application.adapter.convertisseur.EtablissementEnseignementFrequenteConvertisseur;
+import ca.ulaval.set.apipoc.admission.application.adapter.dossierAdmission.EtablissementEnseignementFrequenteConvertisseur;
 import ca.ulaval.set.apipoc.admission.application.in.dossierAdmission.EtablissementEnseignementFrequenteEntiteDto;
 import ca.ulaval.set.apipoc.admission.application.in.dossierAdmission.RechercherEtablissementEnseignementFrequenteQueryPort;
-import ca.ulaval.set.apipoc.admission.domaine.entite.dossierAdmission.DossierAdmissionRepositoryDomaine;
+import ca.ulaval.set.apipoc.admission.application.adapter.dossierAdmission.DossierAdmissionRepositoryDomaine;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
