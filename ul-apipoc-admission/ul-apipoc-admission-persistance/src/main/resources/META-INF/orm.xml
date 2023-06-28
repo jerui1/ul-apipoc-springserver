@@ -8,7 +8,7 @@
             <id name="idDossierAdmission">
                 <column length="16"/>
             </id>
-            <one-to-many name="etablissementEnseignementFrequentes" orphan-removal="true">
+            <one-to-many name="etablissementEnseignementFrequentes" orphan-removal="true" mapped-by="dossierAdmissionParent">
                 <cascade>
                     <cascade-all/>
                 </cascade>
@@ -21,8 +21,9 @@
             <id name="idEtablissementEnseignementFrequente">
                 <column length="16"/>
             </id>
+            <many-to-one name="dossierAdmissionParent">
+            </many-to-one>
             <many-to-one name="etablissementEnseignement">
-
             </many-to-one>
         </attributes>
     </entity>

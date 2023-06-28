@@ -24,4 +24,10 @@ public class DossierAdmissionEntiteRepo {
     @ValidEtablissementEnseignementFrequentes
     private List<EtablissementEnseignementFrequenteEntiteRepo> etablissementEnseignementFrequentes;
 
+    public void setEtablissementEnseignementFrequentes(List<EtablissementEnseignementFrequenteEntiteRepo> etablissementEnseignementFrequentes) {
+        this.etablissementEnseignementFrequentes = etablissementEnseignementFrequentes;
+        if (this.etablissementEnseignementFrequentes != null) {
+            this.etablissementEnseignementFrequentes.forEach(eef -> eef.setDossierAdmissionParent(this));
+        }
+    }
 }
