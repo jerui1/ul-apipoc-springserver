@@ -1,23 +1,36 @@
 package ca.ulaval.set.apipoc.admission.application.adapter.dossierAdmission;
 
+import ca.ulaval.set.apipoc.admission.application.adapter.LazyTransformedList;
 import ca.ulaval.set.apipoc.admission.application.adapter.etablissementEnseignement.EtablissementEnseignementConvertisseur;
-import ca.ulaval.set.apipoc.admission.domaine.entite.dossierAdmission.DossierAdmissionEntiteDomaine;
-import ca.ulaval.set.apipoc.admission.domaine.entite.dossierAdmission.EtablissementEnseignementFrequenteEntiteDomaine;
 import ca.ulaval.set.apipoc.admission.application.in.dossierAdmission.EtablissementEnseignementFrequenteEntiteDto;
 import ca.ulaval.set.apipoc.admission.application.out.repository.dossierAdmission.EtablissementEnseignementFrequenteEntiteRepo;
+import ca.ulaval.set.apipoc.admission.domaine.entite.dossierAdmission.DossierAdmissionEntiteDomaine;
+import ca.ulaval.set.apipoc.admission.domaine.entite.dossierAdmission.EtablissementEnseignementFrequenteEntiteDomaine;
 import org.mapstruct.Mapper;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
 
 @Mapper(componentModel = "spring", uses = EtablissementEnseignementConvertisseur.class)
-public interface EtablissementEnseignementFrequenteConvertisseur {
+public abstract class EtablissementEnseignementFrequenteConvertisseur {
 
-    EtablissementEnseignementFrequenteEntiteDomaine toDomaine(
+    @Autowired
+    private EtablissementEnseignementFrequenteEntiteDomaine.Outillage outillage;
+
+    public abstract EtablissementEnseignementFrequenteEntiteDomaine toDomaine(
             EtablissementEnseignementFrequenteEntiteRepo entiteRepo,
             EtablissementEnseignementFrequenteEntiteDomaine.Outillage outillage);
 
-    //    @Mapping(target = "idDossierAdmission", source = "idDossierAdmission")
-    EtablissementEnseignementFrequenteEntiteDto toDto(
+    public List<EtablissementEnseignementFrequenteEntiteDomaine> toDomaines(
+            List<EtablissementEnseignementFrequenteEntiteRepo> entitesRepo) {
+        return new LazyTransformedList<>(
+                entitesRepo, s -> this.toDomaine(s, outillage));
+    }
+
+    public abstract EtablissementEnseignementFrequenteEntiteDto toDto(
             EtablissementEnseignementFrequenteEntiteDomaine entiteDomaine,
             DossierAdmissionEntiteDomaine dossierAdmissionEntiteDomaine);
 
-    EtablissementEnseignementFrequenteEntiteRepo toRepo(EtablissementEnseignementFrequenteEntiteDomaine entiteDomaine);
+    public abstract EtablissementEnseignementFrequenteEntiteRepo toRepo(
+            EtablissementEnseignementFrequenteEntiteDomaine entiteDomaine);
 }
